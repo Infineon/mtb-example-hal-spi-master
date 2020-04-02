@@ -1,5 +1,10 @@
 /******************************************************************************
-* Copyright (2018-2019), Cypress Semiconductor Corporation. All rights reserved.
+* File Name: resource_map.h
+*
+* Description: This file gives the SPI pin map for all the supported kits.
+*
+*******************************************************************************
+* (c) 2019-2020, Cypress Semiconductor Corporation. All rights reserved.
 *******************************************************************************
 * This software, including source code, documentation and related materials
 * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
@@ -33,28 +38,28 @@
 #ifndef RESOURCE_MAP_H_
 #define RESOURCE_MAP_H_
 
-#if defined (TARGET_CY8CPROTO_062_4343W)					/* CY8CPROTO_062_4343W Kit*/
-	#define sSPI_MOSI				(P9_0)
-	#define sSPI_MISO				(P9_1)
-	#define sSPI_SCLK				(P9_2)
-	#define sSPI_SS					(P9_3)
-#else														/* Other supported kits */
-	#define sSPI_MOSI				(P10_0)
-	#define sSPI_MISO				(P10_1)
-	#define sSPI_SCLK				(P10_2)
-	#define sSPI_SS					(P10_3)
+#if defined (TARGET_CY8CPROTO_062_4343W)                    /* CY8CPROTO_062_4343W Kit*/
+    #define sSPI_MOSI               (P9_0)
+    #define sSPI_MISO               (P9_1)
+    #define sSPI_SCLK               (P9_2)
+    #define sSPI_SS                 (P9_3)
+#else                                                       /* Other supported kits */
+    #define sSPI_MOSI               (P10_0)
+    #define sSPI_MISO               (P10_1)
+    #define sSPI_SCLK               (P10_2)
+    #define sSPI_SS                 (P10_3)
 #endif
 
-#if defined (TARGET_CY8CPROTO_063_BLE) || defined (TARGET_CY8CKIT_062S2_43012) 		/* CY8CPROTO-063-BLE and CY8CKIT_062S2_43012 kit */
-	#define mSPI_MOSI				(P9_0)
-	#define mSPI_MISO				(P9_1)
-	#define mSPI_SCLK				(P9_2)
-	#define mSPI_SS					(P9_3)
-#else													/* Other supported kits */
-	#define mSPI_MOSI				(P6_0)
-	#define mSPI_MISO				(P6_1)
-	#define mSPI_SCLK				(P6_2)
-	#define mSPI_SS					(P6_3)
+#if defined (TARGET_CY8CPROTO_063_BLE) || defined (TARGET_CY8CKIT_062S2_43012) || defined (TARGET_CYW9P62S1_43438EVB_01)     /* CY8CPROTO-063-BLE, CYW9P62S1_43438EVB_01 and CY8CKIT_062S2_43012 kit */
+    #define mSPI_MOSI               (P9_0)
+    #define mSPI_MISO               (P9_1)
+    #define mSPI_SCLK               (P9_2)
+    #define mSPI_SS                 (P9_3)
+#else                                                       /* Other supported kits */
+    #define mSPI_MOSI               (P6_0)
+    #define mSPI_MISO               (P6_1)
+    #define mSPI_SCLK               (P6_2)
+    #define mSPI_SS                 (P6_3)
 #endif
 
 #endif /* RESOURCE_MAP_H_ */
