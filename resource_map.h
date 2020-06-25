@@ -1,7 +1,7 @@
 /******************************************************************************
 * File Name: resource_map.h
 *
-* Description: This file gives the SPI pin map for all the supported kits.
+* Description: This file defines the SPI pin map for all the supported kits.
 *
 *******************************************************************************
 * (c) 2019-2020, Cypress Semiconductor Corporation. All rights reserved.
@@ -38,28 +38,60 @@
 #ifndef RESOURCE_MAP_H_
 #define RESOURCE_MAP_H_
 
-#if defined (TARGET_CY8CPROTO_062_4343W)                    /* CY8CPROTO_062_4343W Kit*/
-    #define sSPI_MOSI               (P9_0)
-    #define sSPI_MISO               (P9_1)
-    #define sSPI_SCLK               (P9_2)
-    #define sSPI_SS                 (P9_3)
-#else                                                       /* Other supported kits */
-    #define sSPI_MOSI               (P10_0)
-    #define sSPI_MISO               (P10_1)
-    #define sSPI_SCLK               (P10_2)
-    #define sSPI_SS                 (P10_3)
+#if defined (TARGET_CY8CPROTO_063_BLE)      
+    #define KIT_SPI_MASTER_MOSI               (P9_0)
+    #define KIT_SPI_MASTER_MISO               (P9_1)
+    #define KIT_SPI_MASTER_SCLK               (P9_2)
+    #define KIT_SPI_MASTER_SS                 (P9_3)
+#elif defined (TARGET_CY8CPROTO_062S3_4343W)
+    #define KIT_SPI_MASTER_MOSI               (P5_0)
+    #define KIT_SPI_MASTER_MISO               (P5_1)
+    #define KIT_SPI_MASTER_SCLK               (P11_2)
+    #define KIT_SPI_MASTER_SS                 (P11_3)
+#elif defined (TARGET_CYW9P62S1_43012EVB_01)
+    #define KIT_SPI_MASTER_MOSI               CYBSP_SPI_MOSI
+    #define KIT_SPI_MASTER_MISO               CYBSP_SPI_MISO
+    #define KIT_SPI_MASTER_SCLK               CYBSP_SPI_CLK
+    #define KIT_SPI_MASTER_SS                 CYBSP_SPI_CS
+#elif defined (TARGET_CY8CKIT_062S2_43012) || defined (TARGET_CYW9P62S1_43438EVB_01) || \
+    defined (TARGET_CY8CKIT_062_BLE) || defined (TARGET_CY8CKIT_062_WIFI_BT)
+    #define KIT_SPI_MASTER_MOSI               CYBSP_SPI_MOSI
+    #define KIT_SPI_MASTER_MISO               CYBSP_SPI_MISO
+    #define KIT_SPI_MASTER_SCLK               CYBSP_SPI_CLK
+    #define KIT_SPI_MASTER_SS                 (P12_3)
+#elif  defined (TARGET_CY8CPROTO_062_4343W)                                                
+    #define KIT_SPI_MASTER_MOSI               (P6_0)
+    #define KIT_SPI_MASTER_MISO               (P6_1)
+    #define KIT_SPI_MASTER_SCLK               (P6_2)
+    #define KIT_SPI_MASTER_SS                 (P6_3)
+#else
+    #error Unsupported kit. Define pins for SPI master.
 #endif
 
-#if defined (TARGET_CY8CPROTO_063_BLE) || defined (TARGET_CY8CKIT_062S2_43012) || defined (TARGET_CYW9P62S1_43438EVB_01)     /* CY8CPROTO-063-BLE, CYW9P62S1_43438EVB_01 and CY8CKIT_062S2_43012 kit */
-    #define mSPI_MOSI               (P9_0)
-    #define mSPI_MISO               (P9_1)
-    #define mSPI_SCLK               (P9_2)
-    #define mSPI_SS                 (P9_3)
-#else                                                       /* Other supported kits */
-    #define mSPI_MOSI               (P6_0)
-    #define mSPI_MISO               (P6_1)
-    #define mSPI_SCLK               (P6_2)
-    #define mSPI_SS                 (P6_3)
+#if defined (TARGET_CY8CPROTO_062_4343W)                    
+    #define KIT_SPI_SLAVE_MOSI               (P9_0)
+    #define KIT_SPI_SLAVE_MISO               (P9_1)
+    #define KIT_SPI_SLAVE_SCLK               (P9_2)
+    #define KIT_SPI_SLAVE_SS                 (P9_3)
+#elif defined (TARGET_CY8CPROTO_062S3_4343W)
+    #define KIT_SPI_SLAVE_MOSI               (P5_0)
+    #define KIT_SPI_SLAVE_MISO               (P5_1)
+    #define KIT_SPI_SLAVE_SCLK               (P11_2)
+    #define KIT_SPI_SLAVE_SS                 (P11_3)
+#elif defined (TARGET_CYW9P62S1_43012EVB_01)
+    #define KIT_SPI_SLAVE_MOSI               CYBSP_SPI_MOSI
+    #define KIT_SPI_SLAVE_MISO               CYBSP_SPI_MISO
+    #define KIT_SPI_SLAVE_SCLK               CYBSP_SPI_CLK
+    #define KIT_SPI_SLAVE_SS                 CYBSP_SPI_CS
+#elif defined (TARGET_CY8CKIT_062_BLE) || defined (TARGET_CY8CKIT_062_WIFI_BT) || \
+    defined (TARGET_CY8CPROTO_063_BLE) || defined (TARGET_CY8CKIT_062S2_43012) || \
+    defined (TARGET_CYW9P62S1_43438EVB_01)
+    #define KIT_SPI_SLAVE_MOSI               (P10_0)
+    #define KIT_SPI_SLAVE_MISO               (P10_1)
+    #define KIT_SPI_SLAVE_SCLK               (P10_2)
+    #define KIT_SPI_SLAVE_SS                 (P10_3)
+#else
+    #error Unsupported kit. Define pins for SPI Slave.
 #endif
 
 #endif /* RESOURCE_MAP_H_ */

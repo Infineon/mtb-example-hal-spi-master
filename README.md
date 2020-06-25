@@ -11,23 +11,27 @@ This example demonstrates the use of SPI (HAL) resource for PSoC® 6 MCU in Mast
 ## Supported Kits
 
 - [PSoC 6 Wi-Fi BT Prototyping Kit](https://www.cypress.com/CY8CPROTO-062-4343W) (CY8CPROTO-062-4343W) - Default target
-- [PSoC 6 WiFi-BT Pioneer Kit](https://www.cypress.com/CY8CKIT-062-WIFI-BT) (CY8CKIT-062-WIFI-BT)
+- [PSoC 6 WiFi-BT Pioneer Kit](https://www.cypress.com/CY8CKIT-062-WiFi-BT) (CY8CKIT-062-WIFI-BT)
 - [PSoC 6 BLE Pioneer Kit](https://www.cypress.com/CY8CKIT-062-BLE) (CY8CKIT-062-BLE)
 - [PSoC 6 BLE Prototyping Kit](https://www.cypress.com/CY8CPROTO-063-BLE) (CY8CPROTO-063-BLE)
 - [PSoC 62S2 Wi-Fi BT Pioneer Kit](https://www.cypress.com/CY8CKIT-062S2-43012) (CY8CKIT-062S2-43012)
 - [PSoC 62S1 Wi-Fi BT Pioneer Kit](https://www.cypress.com/CYW9P62S1-43438EVB-01) (CYW9P62S1-43438EVB-01)
+- [PSoC 62S1 Wi-Fi BT Pioneer Kit](https://www.cypress.com/CYW9P62S1-43012EVB-01) (CYW9P62S1-43012EVB-01)
+- [PSoC 62S3 Wi-Fi BT Prototyping Kit](https://www.cypress.com/CY8CPROTO-062S3-4343W) (CY8CPROTO-062S3-4343W)
 
 ## Hardware Setup
 
 This example uses the board's default configuration. See the kit user guide to ensure that the board is configured correctly.
 
-**Note**: The PSoC 6 BLE Pioneer Kit and the PSoC 6 WiFi-BT Pioneer Kit ship with KitProg2 installed. ModusToolbox software requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware Loader](https://github.com/cypresssemiconductorco/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
+**Note**: The PSoC 6 BLE Pioneer Kit (CY8CKIT-062-BLE) and the PSoC 6 WiFi-BT Pioneer Kit (CY8CKIT-062-WIFI-BT) ship with KitProg2 installed. ModusToolbox software requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware Loader](https://github.com/cypresssemiconductorco/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
 
-Use jumper wires to establish a connection between the master and slave on the kit. For the default kit, do the following on the board (verify with *resource_map.h* to find respective pins for other kits):  
+Use jumper wires to establish a connection between the master and slave on the kit. For the default kit, do the following on the board:  
 1. Connect P6[0] to P9[0].  
 2. Connect P6[1] to P9[1].  
 3. Connect P6[2] to P9[2].  
 4. Connect P6[3] to P9[3].  
+
+For other kits, see *resource_map.h* file to identify the SPI master (KIT_SPI_MASTER_xxx) and slave (KIT_SPI_SLAVE_xxx) pins.
 
 ## Software Setup
 
@@ -43,17 +47,17 @@ This example requires no additional software or tools.
 
 2. Pick a kit supported by the code example from the list shown in the **Project Creator - Choose Board Support Package (BSP)** dialog.
 
-   When you select a supported kit, the example is reconfigured automatically to work with the kit. To work with a different supported kit later, use the **Library Manager** to choose the BSP for the supported kit. You can use the Library Manager to select or update the BSP and firmware libraries used in this application. To access the Library Manager, right-click the application name from the Project Workspace window in the IDE, and select **ModusToolbox** > **Library Manager**.
+   When you select a supported kit, the example is reconfigured automatically to work with the kit. To work with a different supported kit later, use the **Library Manager** to choose the BSP for the supported kit. You can use the Library Manager to select or update the BSP and firmware libraries used in this application. To access the Library Manager, right-click the application name from the Project Workspace window in the IDE, and select **ModusToolbox** > **Library Manager**. You can also access it from the **Quick Panel**.
 
    You can also just start the application creation process again and select a different kit.
 
-   If you want to use the application for a kit not listed here, you may need to update source files. If the kit does not have the required resources, the application may not work.
+   If you want to use the application for a kit not listed here, you may need to update the source files. If the kit does not have the required resources, the application may not work.
 
-3. In the **Project Creator - Choose Board Support Package (BSP)** dialog, choose the example.
+3. In the **Project Creator - Select Application** dialog, choose the example.
 
-4. Optionally, update the **Application Name:** and **Location** fields with the application name and local path where application is created.
+4. Optionally, update the **Application Name:** and **Location** fields with the application name and local path where the application is created.
 
-5. Click **Create** and complete the application creation process.
+5. Click **Create** to complete the application creation process.
 
 For more details, see the Eclipse IDE for ModusToolbox User Guide: *{ModusToolbox install directory}/ide_{version}/docs/mt_ide_user_guide.pdf*.
 
@@ -61,60 +65,69 @@ For more details, see the Eclipse IDE for ModusToolbox User Guide: *{ModusToolbo
 
 1. Download and unzip this repository onto your local machine, or clone the repository.
 
-2. Open a CLI terminal and navigate to the application folder. On Linux and macOS, you can use any terminal application. On Windows, navigate to the modus-shell directory (*{ModusToolbox install directory}/tools_\<version>/modus-shell*) and run Cygwin.bat.
+2. Open a CLI terminal and navigate to the application folder.
 
-3. Import required libraries by executing the `make getlibs` command.
+On Linux and macOS, you can use any terminal application. On Windows, navigate to the modus-shell directory (*{ModusToolbox install directory}/tools_\<version>/modus-shell*) and run *Cygwin.bat*.
+
+3. Import the required libraries by executing the `make getlibs` command.
 
 ### In Third-party IDEs:
 
-1. Follow instructions from the CLI section to download or clone the repository, and import libraries using `make getlibs` command.
+1. Follow the instructions from the CLI section to download or clone the repository, and import the libraries using the `make getlibs` command.
 
 2. Export the application to a supported IDE using the `make <ide>` command.
 
-3. Follow instructions displayed in the terminal to create or import the application as an IDE project.
+3. Follow the instructions displayed in the terminal to create or import the application as an IDE project.
 
-For more details, see *Exporting to IDEs* section of the ModusToolbox User Guide: *{ModusToolbox install directory}/ide_{version}/docs/mtb_user_guide.pdf*.
+For more details, see the "Exporting to IDEs" section of the ModusToolbox User Guide: *{ModusToolbox install directory}/ide_{version}/docs/mtb_user_guide.pdf*.
 
 ## Operation
 
-1. Connect the board to your PC using the provided USB cable through the USB connector.
+You can configure this example to work in master-only or slave-only or both master and slave SPI modes by configuring the value of SPI_MODE macro in app_config.h file. By default, this example is configured to work in both the SPI modes and therefore requires kits having 2 SPI ports, one acting as master and the other one as slave. The kits CYW9P62S1-43012EVB-01 and CY8CPROTO-062S3-4343W support only one SPI port on the I/O header. Therefore, you can configure these kits only in either master mode (set SPI_MODE to SPI_MODE_MASTER) or slave mode (set SPI_MODE to SPI_MODE_SLAVE). In that case, you need two kits, one acting as SPI master and the other one acting as SPI slave, to run this example.
+
+1. Connect the board to your PC using the provided USB cable through the KitProg3 USB connector.
 
 2. Open a terminal program and select the KitProg3 COM port. Set the serial port parameters to 8N1 and 115200 baud.
 
-3. Program the board. 
+3. Program the board.
 
-   ### Using Eclipse IDE for ModusToolbox:
+   - **Using Eclipse IDE for ModusToolbox**:
 
-      1. Select the application project in the Project Explorer. 
-   
-   2. In the **Quick Panel**, scroll down, and click **\<Application Name> Program (KitProg3)**.
+      1. Select the application project in the Project Explorer.
 
-   ### Using CLI:
+      2. In the **Quick Panel**, scroll down, and click **\<Application Name> Program (KitProg3)**.
 
-   1. From the terminal, execute the `make program` command to build and program the application using the default toolchain to the default target. You can specify a target and toolchain manually:
-        ```
-        make program TARGET=<BSP> TOOLCHAIN=<toolchain>
-        ```
-        Example: 
-   
-        ```
-        make program TARGET=CY8CPROTO-062-4343W TOOLCHAIN=GCC_ARM
-        ```
-        **Note**:  Before building the application, ensure that the *deps* folder contains the BSP file (*TARGET_xxx.lib*) corresponding to the TARGET. Execute the `make getlibs` command to fetch the BSP contents before building the application.
+   - **Using CLI**:
 
-4. After programming, the application starts automatically. Confirm that the CE title is displayed on the UART terminal.
+     From the terminal, execute the `make program` command to build and program the application using the default toolchain to the default target. You can specify a target and toolchain manually:
+      ```
+      make program TARGET=<BSP> TOOLCHAIN=<toolchain>
+      ```
+
+      Example:
+      ```
+      make program TARGET=CY8CPROTO-062-4343W TOOLCHAIN=GCC_ARM
+      ```
+
+      **Note**:  Before building the application, ensure that the *deps* folder contains the BSP file (*TARGET_xxx.lib*) corresponding to the TARGET. Execute the `make getlibs` command to fetch the BSP contents before building the application.
+
+4. After programming, the application starts automatically.  Confirm that the code example title is displayed on the UART terminal as shown in [Figure 1](#figure-1-terminal-window-on-startup).
+
+   ##### Figure 1. Terminal Window On Startup 
+
+   ![](images/terminal_window.png)
 
 5. Observe that the kit user LED blinks at 1 Hz.
 
 ## Debugging
 
-You can debug the example to step through the code. In the IDE, use the **\<Application Name> Debug (KitProg3)** configuration in the **Quick Panel**. For more details, see *Program and Debug* section in the Eclipse IDE for ModusToolbox User Guide: *{ModusToolbox install directory}/ide_{version}/docs/mt_ide_user_guide.pdf*.
+You can debug the example to step through the code. In the IDE, use the **\<Application Name> Debug (KitProg3)** configuration in the **Quick Panel**. For more details, see the "Program and Debug" section in the Eclipse IDE for ModusToolbox User Guide: *{ModusToolbox install directory}/ide_{version}/docs/mt_ide_user_guide.pdf*.
 
 ## Design and Implementation
 
 ### Resources and Settings
 
-The Arm® Cortex®-M4 (CM4) MCU controls both the Master and Slave SPI resources. Both these resources are used from the same chip, so that users can test the functionality on a single kit.
+The Arm® Cortex®-M4 (CM4) MCU controls both the Master and Slave SPI resources. You can configure this example to operate in both master and slave SPI modes so that you can run this example using a single kit provided that the kit supports two SPI ports on its I/O header.
 
 The Master sends a packet to the slave with a command to turn ON or turn OFF the user LED. The packets are sent at an interval of 1 second. The slave receives the packet and controls the LED as per the command.
 
@@ -165,18 +178,19 @@ For PSoC 6 MCU devices, see [How to Design with PSoC 6 MCU - KBA223067](https://
 
 ## Document History
 
-Document Title: CE221120 - PSoC 6 MCU: SPI Master
+Document Title: *CE221120* - *PSoC 6 MCU: SPI Master*
 
 | Version | Description of Change |
 | ------- | --------------------- |
 | 1.0.0   | New code example      |
 | 1.1.0   | Updated to support ModusToolbox software v2.1 |
+| 1.2.0   | Added support for CY8CPROTO-062S3-4343W and CYW9P62S1-43012EVB-01 kits |
 
 ------
 
 All other trademarks or registered trademarks referenced herein are the property of their respective owners.
 
-![Banner](images/Banner.png)
+![banner](images/footer_banner.png)
 
 -------------------------------------------------------------------------------
 
