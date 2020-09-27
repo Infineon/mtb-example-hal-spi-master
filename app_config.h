@@ -68,10 +68,8 @@
 
 #if (SPI_MODE == SPI_MODE_BOTH)
     #if defined (TARGET_CYW9P62S1_43012EVB_01) || defined (TARGET_CY8CPROTO_062S3_4343W)
-        #warning For the current TARGET, this example requires the SPI_MODE macro to be \
-                 configured either in SPI_MODE_MASTER or SPI_MODE_SLAVE, not in SPI_MODE_BOTH.
+        #warning For the current TARGET, this example requires the SPI_MODE macro to be configured either in SPI_MODE_MASTER or SPI_MODE_SLAVE, not in SPI_MODE_BOTH.
     #endif
 #endif
-    
 
 #endif /* APP_CONFIG_H_ */
