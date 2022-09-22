@@ -9,7 +9,7 @@
 *
 *
 *******************************************************************************
-* Copyright 2019-2021, Cypress Semiconductor Corporation (an Infineon company) or
+* Copyright 2019-2022, Cypress Semiconductor Corporation (an Infineon company) or
 * an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
 *
 * This software, including source code, documentation and related
@@ -41,15 +41,23 @@
 * so agrees to indemnify Cypress against all liability.
 *******************************************************************************/
 
-#include "cy_pdl.h"
 #include "cyhal.h"
 #include "cybsp.h"
 #include "cy_retarget_io.h"
-#include "app_config.h"
 
-/***************************************
-*            Constants
-****************************************/
+
+/*******************************************************************************
+* Macros
+*******************************************************************************/
+/* This code example requires two SPI ports, one as master and the other one 
+ * as slave. You can set the SPI_MODE macro to configure the kit in either 
+ * SPI_MODE_MASTER or SPI_MODE_SLAVE. See README.md to know more details.
+ */
+#define SPI_MODE_MASTER             1
+#define SPI_MODE_SLAVE              2
+
+#define SPI_MODE                    SPI_MODE_MASTER
+
 #define SPI_FREQ_HZ                (1000000UL)
 #define CMD_TO_CMD_DELAY_MS        (1000UL)
 
@@ -78,7 +86,7 @@ void handle_error(void)
 * Function Name: main
 ********************************************************************************
 * Summary:
-* This is the main function for CM4 CPU.
+* This is the main function.
 *   1. SPI Master sends command packet to the slave
 *   2. Slave reads the packet and executes the instructions
 *
@@ -95,15 +103,14 @@ int main(void)
 
     /* Initialize the device and board peripherals */
     result = cybsp_init();
-
     if (result != CY_RSLT_SUCCESS)
     {
         handle_error();
     }
 
+    /* Initialize retarget-io for uart logging */
     result = cy_retarget_io_init( CYBSP_DEBUG_UART_TX, CYBSP_DEBUG_UART_RX, 
                                   CY_RETARGET_IO_BAUDRATE);
-    
     if (result != CY_RSLT_SUCCESS)
     {
         handle_error();
@@ -111,7 +118,6 @@ int main(void)
 
     result = cyhal_gpio_init( CYBSP_USER_LED, CYHAL_GPIO_DIR_OUTPUT,
                               CYHAL_GPIO_DRIVE_STRONG, CYBSP_LED_STATE_OFF);
-    
     if (result != CY_RSLT_SUCCESS)
     {
         handle_error();
@@ -121,48 +127,44 @@ int main(void)
     printf("\x1b[2J\x1b[;H");
 
     printf("**************************\r\n");
-    printf("PSoC 6 MCU: SPI Master\r\n");
+    printf("HAL: SPI Master\r\n");
     printf("**************************\r\n\n");
     
-    /* Configure SPI Master */
-#if ((SPI_MODE == SPI_MODE_BOTH) || (SPI_MODE == SPI_MODE_MASTER))
+    /* Configure SPI to Master mode */
+#if (SPI_MODE == SPI_MODE_MASTER)
     uint32_t cmd_send = CYBSP_LED_STATE_OFF;
     cyhal_spi_t mSPI;
 
     printf("Configuring SPI master...\r\n");
 
-    result = cyhal_spi_init( &mSPI, mSPI_MOSI, mSPI_MISO, mSPI_SCLK, 
-                             mSPI_SS, NULL, 8, CYHAL_SPI_MODE_00_MSB, false);
-
+    result = cyhal_spi_init( &mSPI, CYBSP_SPI_MOSI, CYBSP_SPI_MISO, CYBSP_SPI_CLK,
+                             CYBSP_SPI_CS, NULL, 8, CYHAL_SPI_MODE_00_MSB, false);
     if (result != CY_RSLT_SUCCESS)
     {
         handle_error();
     }
 
     result = cyhal_spi_set_frequency( &mSPI, SPI_FREQ_HZ);
-
     if (result != CY_RSLT_SUCCESS)
     {
         handle_error();
     }
 #endif
 
-    /* Configure SPI Slave */
-#if ((SPI_MODE == SPI_MODE_BOTH) || (SPI_MODE == SPI_MODE_SLAVE))
+    /* Configure SPI to Slave mode */
+#if (SPI_MODE == SPI_MODE_SLAVE)
     cyhal_spi_t sSPI;
     uint32_t cmd_recv = CYBSP_LED_STATE_OFF;
 
     printf("Configuring SPI slave...\r\n");
-    result = cyhal_spi_init( &sSPI, sSPI_MOSI, sSPI_MISO, sSPI_SCLK, 
-                             sSPI_SS, NULL, 8, CYHAL_SPI_MODE_00_MSB, true);
-
+    result = cyhal_spi_init( &sSPI, CYBSP_SPI_MOSI, CYBSP_SPI_MISO, CYBSP_SPI_CLK,
+                            CYBSP_SPI_CS, NULL, 8, CYHAL_SPI_MODE_00_MSB, true);
     if (result != CY_RSLT_SUCCESS)
     {
         handle_error();
     }
 
     result = cyhal_spi_set_frequency( &sSPI, SPI_FREQ_HZ);
-
     if (result != CY_RSLT_SUCCESS)
     {
         handle_error();
@@ -174,7 +176,7 @@ int main(void)
 
     for (;;)
     {
-#if ((SPI_MODE == SPI_MODE_BOTH) || (SPI_MODE == SPI_MODE_MASTER))
+#if (SPI_MODE == SPI_MODE_MASTER)
         /* Toggle the current LED state */
         cmd_send = (cmd_send == CYBSP_LED_STATE_OFF) ? CYBSP_LED_STATE_ON : CYBSP_LED_STATE_OFF;
 
@@ -185,9 +187,12 @@ int main(void)
         {
             handle_error();
         }
+
+        /* Give delay between commands. */
+        cyhal_system_delay_ms(CMD_TO_CMD_DELAY_MS);
 #endif
 
-#if ((SPI_MODE == SPI_MODE_BOTH) || (SPI_MODE == SPI_MODE_SLAVE))
+#if (SPI_MODE == SPI_MODE_SLAVE)
         /* The below code is for slave function. It is implemented in this code
          * example so that the master function can be tested without the need
          * of one more kit.
@@ -204,10 +209,7 @@ int main(void)
             handle_error();
         }
 #endif
-        
-#if ((SPI_MODE == SPI_MODE_BOTH) || (SPI_MODE == SPI_MODE_MASTER))
-        /* Give delay between commands. */
-        cyhal_system_delay_ms(CMD_TO_CMD_DELAY_MS);
-#endif
     }
 }
+
+/* [] END OF FILE */
