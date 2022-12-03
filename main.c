@@ -1,15 +1,15 @@
-/******************************************************************************
+/*******************************************************************************
 * File Name:   main.c
 *
 * Description: This example project demonstrates the basic operation of SPI
-* resource as Master using HAL. The SPI master sends command packets
-* to the SPI slave to control an user LED.
+* resource as Master using HAL. The SPI master sends command packetsto the SPI
+* slave to control an user LED.
 *
 * Related Document: See README.md
 *
 *
 *******************************************************************************
-* Copyright 2019-2021, Cypress Semiconductor Corporation (an Infineon company) or
+* Copyright 2019-2022, Cypress Semiconductor Corporation (an Infineon company) or
 * an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
 *
 * This software, including source code, documentation and related
@@ -41,17 +41,38 @@
 * so agrees to indemnify Cypress against all liability.
 *******************************************************************************/
 
-#include "cy_pdl.h"
+/*******************************************************************************
+* Header Files
+*******************************************************************************/
 #include "cyhal.h"
 #include "cybsp.h"
 #include "cy_retarget_io.h"
-#include "app_config.h"
 
-/***************************************
-*            Constants
-****************************************/
+
+/*******************************************************************************
+* Macros
+*******************************************************************************/
+/* SPI baud rate in Hz */
 #define SPI_FREQ_HZ                (1000000UL)
-#define CMD_TO_CMD_DELAY_MS        (1000UL)
+/* Delay of 1000ms between commands */
+#define CMD_TO_CMD_DELAY           (1000UL)
+/* SPI transfer bits per frame */
+#define BITS_PER_FRAME             (8)
+
+
+/*******************************************************************************
+* Global Variables
+*******************************************************************************/
+
+
+/*******************************************************************************
+* Function Prototypes
+*******************************************************************************/
+
+
+/*******************************************************************************
+* Function Definitions
+*******************************************************************************/
 
 /*******************************************************************************
 * Function Name: handle_error
@@ -60,27 +81,27 @@
 * User defined error handling function
 *
 * Parameters:
-*  void
+*  uint32_t status - status indicates success or failure
 *
 * Return:
 *  void
 *
 *******************************************************************************/
-void handle_error(void)
+void handle_error(uint32_t status)
 {
-     /* Disable all interrupts. */
-    __disable_irq();
-
-    CY_ASSERT(0);
+    if (status != CY_RSLT_SUCCESS)
+    {
+        CY_ASSERT(0);
+    }
 }
 
 /*******************************************************************************
 * Function Name: main
 ********************************************************************************
 * Summary:
-* This is the main function for CM4 CPU.
-*   1. SPI Master sends command packet to the slave
-*   2. Slave reads the packet and executes the instructions
+* The main function.
+*   1. Initializes the board, retarget-io and led
+*   2. Configures the SPI Master to send command packet to the slave
 *
 * Parameters:
 *  void
@@ -92,122 +113,62 @@ void handle_error(void)
 int main(void)
 {
     cy_rslt_t result;
+    uint32_t cmd_send = CYBSP_LED_STATE_OFF;
+    cyhal_spi_t mSPI;
 
     /* Initialize the device and board peripherals */
     result = cybsp_init();
+    /* Board init failed. Stop program execution */
+    handle_error(result);
 
-    if (result != CY_RSLT_SUCCESS)
-    {
-        handle_error();
-    }
-
-    result = cy_retarget_io_init( CYBSP_DEBUG_UART_TX, CYBSP_DEBUG_UART_RX, 
+    /* Initialize retarget-io for uart logs */
+    result = cy_retarget_io_init(CYBSP_DEBUG_UART_TX, CYBSP_DEBUG_UART_RX,
                                   CY_RETARGET_IO_BAUDRATE);
-    
-    if (result != CY_RSLT_SUCCESS)
-    {
-        handle_error();
-    }
+    /* Retarget-io init failed. Stop program execution */
+    handle_error(result);
 
-    result = cyhal_gpio_init( CYBSP_USER_LED, CYHAL_GPIO_DIR_OUTPUT,
+    /* Initialize the user LED */
+    result = cyhal_gpio_init(CYBSP_USER_LED, CYHAL_GPIO_DIR_OUTPUT,
                               CYHAL_GPIO_DRIVE_STRONG, CYBSP_LED_STATE_OFF);
-    
-    if (result != CY_RSLT_SUCCESS)
-    {
-        handle_error();
-    }
+    /* User LED init failed. Stop program execution */
+    handle_error(result);
 
     /* \x1b[2J\x1b[;H - ANSI ESC sequence for clear screen */
     printf("\x1b[2J\x1b[;H");
 
-    printf("**************************\r\n");
-    printf("PSoC 6 MCU: SPI Master\r\n");
-    printf("**************************\r\n\n");
-    
-    /* Configure SPI Master */
-#if ((SPI_MODE == SPI_MODE_BOTH) || (SPI_MODE == SPI_MODE_MASTER))
-    uint32_t cmd_send = CYBSP_LED_STATE_OFF;
-    cyhal_spi_t mSPI;
+    printf("*************** "
+           "HAL: SPI Master "
+           "*************** \r\n\n");
 
     printf("Configuring SPI master...\r\n");
+    /* Init SPI master */
+    result = cyhal_spi_init(&mSPI,CYBSP_SPI_MOSI,CYBSP_SPI_MISO,CYBSP_SPI_CLK,
+                            CYBSP_SPI_CS,NULL,BITS_PER_FRAME,
+                            CYHAL_SPI_MODE_00_MSB,false);
+    handle_error(result);
 
-    result = cyhal_spi_init( &mSPI, mSPI_MOSI, mSPI_MISO, mSPI_SCLK, 
-                             mSPI_SS, NULL, 8, CYHAL_SPI_MODE_00_MSB, false);
-
-    if (result != CY_RSLT_SUCCESS)
-    {
-        handle_error();
-    }
-
-    result = cyhal_spi_set_frequency( &mSPI, SPI_FREQ_HZ);
-
-    if (result != CY_RSLT_SUCCESS)
-    {
-        handle_error();
-    }
-#endif
-
-    /* Configure SPI Slave */
-#if ((SPI_MODE == SPI_MODE_BOTH) || (SPI_MODE == SPI_MODE_SLAVE))
-    cyhal_spi_t sSPI;
-    uint32_t cmd_recv = CYBSP_LED_STATE_OFF;
-
-    printf("Configuring SPI slave...\r\n");
-    result = cyhal_spi_init( &sSPI, sSPI_MOSI, sSPI_MISO, sSPI_SCLK, 
-                             sSPI_SS, NULL, 8, CYHAL_SPI_MODE_00_MSB, true);
-
-    if (result != CY_RSLT_SUCCESS)
-    {
-        handle_error();
-    }
-
-    result = cyhal_spi_set_frequency( &sSPI, SPI_FREQ_HZ);
-
-    if (result != CY_RSLT_SUCCESS)
-    {
-        handle_error();
-    }
-#endif
+    /* Set the SPI baud rate */
+    result = cyhal_spi_set_frequency(&mSPI, SPI_FREQ_HZ);
+    handle_error(result);
 
     /* Enable interrupts */
     __enable_irq();
 
     for (;;)
     {
-#if ((SPI_MODE == SPI_MODE_BOTH) || (SPI_MODE == SPI_MODE_MASTER))
         /* Toggle the current LED state */
-        cmd_send = (cmd_send == CYBSP_LED_STATE_OFF) ? CYBSP_LED_STATE_ON : CYBSP_LED_STATE_OFF;
+        cmd_send = (cmd_send == CYBSP_LED_STATE_OFF) ?
+                     CYBSP_LED_STATE_ON : CYBSP_LED_STATE_OFF;
 
-        /* Send the command byte to the slave. */
+        /* Send the command packet to the slave */
         result = cyhal_spi_send(&mSPI, cmd_send);
 
-        if (CY_RSLT_SUCCESS != result)
-        {
-            handle_error();
-        }
-#endif
+        handle_error(result);
 
-#if ((SPI_MODE == SPI_MODE_BOTH) || (SPI_MODE == SPI_MODE_SLAVE))
-        /* The below code is for slave function. It is implemented in this code
-         * example so that the master function can be tested without the need
-         * of one more kit.
-         */
-
-        /* Read the command byte */
-        if (CY_RSLT_SUCCESS == cyhal_spi_recv(&sSPI, &cmd_recv))
-        {
-            /* Execute command */
-            cyhal_gpio_write( CYBSP_USER_LED, cmd_recv);
-        }
-        else
-        {
-            handle_error();
-        }
-#endif
-        
-#if ((SPI_MODE == SPI_MODE_BOTH) || (SPI_MODE == SPI_MODE_MASTER))
-        /* Give delay between commands. */
-        cyhal_system_delay_ms(CMD_TO_CMD_DELAY_MS);
-#endif
+        /* Give delay between commands */
+        cyhal_system_delay_ms(CMD_TO_CMD_DELAY);
     }
 }
+
+
+/* [] END OF FILE */
