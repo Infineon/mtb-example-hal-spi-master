@@ -127,12 +127,6 @@ int main(void)
     /* Retarget-io init failed. Stop program execution */
     handle_error(result);
 
-    /* Initialize the user LED */
-    result = cyhal_gpio_init(CYBSP_USER_LED, CYHAL_GPIO_DIR_OUTPUT,
-                              CYHAL_GPIO_DRIVE_STRONG, CYBSP_LED_STATE_OFF);
-    /* User LED init failed. Stop program execution */
-    handle_error(result);
-
     /* \x1b[2J\x1b[;H - ANSI ESC sequence for clear screen */
     printf("\x1b[2J\x1b[;H");
 
@@ -156,7 +150,7 @@ int main(void)
 
     for (;;)
     {
-        /* Toggle the current LED state */
+        /* Toggle the slave LED state */
         cmd_send = (cmd_send == CYBSP_LED_STATE_OFF) ?
                      CYBSP_LED_STATE_ON : CYBSP_LED_STATE_OFF;
 
