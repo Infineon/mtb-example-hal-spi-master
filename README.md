@@ -4,7 +4,7 @@ This code example demonstrates the use of a SPI (HAL) resource in master mode. T
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-hal-spi-master)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMjU1NzciLCJTcGVjIE51bWJlciI6IjAwMi0yNTU3NyIsIkRvYyBUaXRsZSI6IkhBTDogU1BJIG1hc3RlciIsInJpZCI6InNkYWsiLCJEb2MgdmVyc2lvbiI6IjMuNy4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMjU1NzciLCJTcGVjIE51bWJlciI6IjAwMi0yNTU3NyIsIkRvYyBUaXRsZSI6IkhBTDogU1BJIG1hc3RlciIsInJpZCI6InNkYWsiLCJEb2MgdmVyc2lvbiI6IjMuNy4xIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
 
 ## Requirements
 
@@ -72,8 +72,8 @@ In AIROC&trade; CYW89829 Bluetooth&reg; kit (CYW989829M2EVB-01) Bluetooth&reg;.S
  SPI signal       | SCB pin    | Header pin
  :--------------- | :--------- | :---------------
  SCLK             | P0[4]      |   J7.3
- MOSI             | P0[2]      |   J9.4
- MISO             | P0[3]      |   J9.5
+ MOSI             | P0[2]      |   J9.3
+ MISO             | P0[3]      |   J9.4
  CS               | P0[0]      |   J6.5
 
 **Note:** This code examples provides the custom design.modus files under template directory for few BSPs, because these BSPs do not have aliases for the SPI pins by default (e.g. CYBSP_SPI_MOSI, CYBSP_SPI_MISO, CYBSP_SPI_SCLK, CYBSP_SPI_CS). The other BSPs already have those aliases defined in the default design.modus file, thus do not need any customization.
@@ -320,6 +320,7 @@ Document title: *CE225577* - *HAL: SPI master*
  3.5.0   | Added support for KIT_XMC72_EVK_MUR_43439M2 and updated to support ModusToolbox&trade; v3.1.
  3.6.0   | Added support for KIT_XMC71_EVK_LITE_V1
  3.7.0   | Added support for CY8CEVAL-062S2-CYW43022CUB CYW989829M2EVB-01
+ 3.7.1   | update pin number for CYW989829
 <br>
 
 All referenced product or service names and trademarks are the property of their respective owners.
