@@ -4,16 +4,17 @@ This code example demonstrates the use of a SPI (HAL) resource in master mode. T
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-hal-spi-master)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMjU1NzciLCJTcGVjIE51bWJlciI6IjAwMi0yNTU3NyIsIkRvYyBUaXRsZSI6IkhBTDogU1BJIG1hc3RlciIsInJpZCI6InNkYWsiLCJEb2MgdmVyc2lvbiI6IjMuOC4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMjU1NzciLCJTcGVjIE51bWJlciI6IjAwMi0yNTU3NyIsIkRvYyBUaXRsZSI6IkhBTDogU1BJIG1hc3RlciIsInJpZCI6InNkYWsiLCJEb2MgdmVyc2lvbiI6IjMuOS4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
 
 ## Requirements
 
-- [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) v3.1 or later (tested with v3.1)
+- [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) v3.2 or later (tested with v3.2)
 - Board Support Package (BSP) minimum required version for:
    - PSoC&trade; 6 MCU: v4.2.0
    - KIT_XMC72_EVK: v1.0.0
    - CYW920829M2EVK-02: v1.0.1
-   - CYW989829M2EVB-01: v1.0.1
+   - CYW989829M2EVB-01: v1.0.4
+   - CYW989829M2EVB-03: v1.0.4
 - Programming language: C
 - Associated parts: All [PSoC&trade; 6 MCU](https://www.infineon.com/PSoC6) parts, [XMC7000 MCU](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/), and [AIROC&trade; CYW20829 Bluetooth&reg; LE SoC](https://www.infineon.com/cms/en/product/promopages/airoc20829/)
 
@@ -28,7 +29,7 @@ This code example demonstrates the use of a SPI (HAL) resource in master mode. T
 - [PSoC&trade; 62S2 Wi-Fi Bluetooth&reg; Prototyping Kit](https://www.infineon.com/CY8CPROTO-062S2-43439) (`CY8CPROTO-062S2-43439`) – Default value of `TARGET`
 - [PSoC&trade; 6 Wi-Fi Bluetooth&reg; Prototyping Kit](https://www.infineon.com/CY8CPROTO-062-4343W) (`CY8CPROTO-062-4343W`)
 - [AIROC&trade; CYW20829 Bluetooth&reg; LE Evaluation Kit](https://www.infineon.com/CYW920829M2EVK-02) (`CYW920829M2EVK-02`)
-- [AIROC&trade; CYW89829 Bluetooth&reg; LE evaluation kit](`CYW89829M2EVB-01`)
+- AIROC&trade; CYW89829 Bluetooth&reg; LE evaluation kit(`CYW89829M2EVB-01`,`CYW89829M2EVB-03`)
 - [PSoC&trade; 6 Wi-Fi Bluetooth&reg; Pioneer Kit](https://www.infineon.com/CY8CKIT-062-WIFI-BT) (`CY8CKIT-062-WIFI-BT`)
 - [PSoC&trade; 6 Bluetooth&reg; LE Pioneer Kit](https://www.infineon.com/CY8CKIT-062-BLE) (`CY8CKIT-062-BLE`)
 - [PSoC&trade; 6 Bluetooth&reg; LE Prototyping Kit](https://www.infineon.com/CY8CPROTO-063-BLE) (`CY8CPROTO-063-BLE`)
@@ -60,7 +61,7 @@ Two devices are required to verify the output: one for the master and one for th
 
 The AIROC&trade; CYW20829 Bluetooth&reg; ships with KitProg3 version 2.21 installed. The ModusToolbox&trade; requires KitProg3 with the latest version (2.40). Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware Loader](https://github.com/Infineon/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error such as "Unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
 
-In AIROC&trade; CYW20829 Bluetooth&reg; kit (CYW920829M2EVK-02) the SPI (CS, CLK) and User Button2, USER LED1 share the same GPIOs, while you need SPI USER LED1 will be glowing based on SPI CLK activity. The SWD and SPI (MOSI, MISO) interfaces share the same GPIOs and must use one interface at a time. See the table below to make SPI connections:
+In AIROC&trade; CYW20829 Bluetooth&reg; kit (CYW920829M2EVK-02,CYW989829M2EVB-03) the SPI (CS, CLK) and User Button2, USER LED1 share the same GPIOs, while you need SPI USER LED1 will be glowing based on SPI CLK activity. The SWD and SPI (MOSI, MISO) interfaces share the same GPIOs and must use one interface at a time. See the table below to make SPI connections:
 
  SPI signal       | SCB pin    | Header pin
  :--------------- | :--------- | :---------------
@@ -267,6 +268,8 @@ Follow the instructions in your preferred IDE.
 
 The Arm&reg; Cortex&reg; CPU controls the master SPI resource. The master sends packets to the slave with the command to turn ON or OFF the user LED. The packets are sent at an interval of one second. The slave receives the packets and controls the LED according to the command.
 
+**Note:** For CYW989829M2EVB-03 board, use Blue LED to blink.
+
 ### Resources and settings
 
 **Table 1. Application resources**
@@ -323,6 +326,7 @@ Document title: *CE225577* - *HAL: SPI master*
  3.7.0   | Added support for CY8CEVAL-062S2-CYW43022CUB CYW989829M2EVB-01
  3.7.1   | update pin number for CYW989829
  3.8.0   | Added support for CY8CKIT-062S2-AI 
+ 3.9.0   | Added support for CYW989829M2EVB-03
 <br>
 
 All referenced product or service names and trademarks are the property of their respective owners.
