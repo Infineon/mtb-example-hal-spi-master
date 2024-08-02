@@ -4,7 +4,7 @@ This code example demonstrates the use of a SPI (HAL) resource in master mode. T
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-hal-spi-master)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMjU1NzciLCJTcGVjIE51bWJlciI6IjAwMi0yNTU3NyIsIkRvYyBUaXRsZSI6IkhBTDogU1BJIG1hc3RlciIsInJpZCI6InNkYWsiLCJEb2MgdmVyc2lvbiI6IjMuOS4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMjU1NzciLCJTcGVjIE51bWJlciI6IjAwMi0yNTU3NyIsIkRvYyBUaXRsZSI6IkhBTDogU1BJIG1hc3RlciIsInJpZCI6InBhdGhpc3VkaGFycyIsIkRvYyB2ZXJzaW9uIjoiMy4xMC4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
 
 ## Requirements
 
@@ -40,7 +40,7 @@ This code example demonstrates the use of a SPI (HAL) resource in master mode. T
 - [EZ-BLE Arduino Evaluation Board](https://www.infineon.com/cms/en/product/evaluation-boards/cyble-416045-eval/) (`CYBLE-416045-EVAL`)
 - [PSoC&trade; 64 "Secure Boot" Wi-Fi Bluetooth&reg; Pioneer Kit](https://www.infineon.com/CY8CKIT-064B0S2-4343W) (`CY8CKIT-064B0S2-4343W`)
 - [PSoC&trade; 62S4 Pioneer Kit](https://www.infineon.com/CY8CKIT-062S4) (`CY8CKIT-062S4`)
-- [PSoC&trade; 62S2 Evaluation Kit](https://www.infineon.com/CY8CEVAL-062S2) (`CY8CEVAL-062S2`, `CY8CEVAL-062S2-LAI-4373M2`, `CY8CEVAL-062S2-MUR-43439M2`, `CY8CEVAL-062S2-LAI-43439M2`, `CY8CEVAL-062S2-MUR-4373EM2`, `CY8CEVAL-062S2-MUR-4373M2`,`CY8CEVAL-062S2-CYW43022CUB`)
+- [PSoC&trade; 62S2 Evaluation Kit](https://www.infineon.com/CY8CEVAL-062S2) (`CY8CEVAL-062S2`, `CY8CEVAL-062S2-LAI-4373M2`, `CY8CEVAL-062S2-MUR-43439M2`, `CY8CEVAL-062S2-LAI-43439M2`, `CY8CEVAL-062S2-MUR-4373EM2`, `CY8CEVAL-062S2-MUR-4373M2`,`CY8CEVAL-062S2-CYW43022CUB` , `CY8CEVAL-062S2-CYW955513SDM2WLIPA`)
 - [PSoC&trade; 64 "Secure Boot" Prototyping Kit](https://www.infineon.com/CY8CPROTO-064B0S3) (`CY8CPROTO-064B0S3`)
 - [PSoC&trade; 64 "Secure Boot" Prototyping Kit](https://www.infineon.com/CY8CPROTO-064S1-SB) (`CY8CPROTO-064S1-SB`)
 - [XMC7200 Evaluation Kit](https://www.infineon.com/KIT_XMC72_EVK) (`KIT_XMC72_EVK`, `KIT_XMC72_EVK_MUR_43439M2`)
@@ -327,6 +327,8 @@ Document title: *CE225577* - *HAL: SPI master*
  3.7.1   | update pin number for CYW989829
  3.8.0   | Added support for CY8CKIT-062S2-AI 
  3.9.0   | Added support for CYW989829M2EVB-03
+ 3.10.0  | Added support for CY8CEVAL-062S2-CYW955513SDM2WLIPA
+ 
 <br>
 
 All referenced product or service names and trademarks are the property of their respective owners.
