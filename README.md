@@ -4,7 +4,7 @@ This code example demonstrates the use of a SPI (HAL) resource in master mode. T
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-hal-spi-master)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMjU1NzciLCJTcGVjIE51bWJlciI6IjAwMi0yNTU3NyIsIkRvYyBUaXRsZSI6IkhBTDogU1BJIG1hc3RlciIsInJpZCI6InBhdGhpc3VkaGFycyIsIkRvYyB2ZXJzaW9uIjoiMy4xMC4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMjU1NzciLCJTcGVjIE51bWJlciI6IjAwMi0yNTU3NyIsIkRvYyBUaXRsZSI6IkhBTDogU1BJIG1hc3RlciIsInJpZCI6InBhdGhpc3VkaGFycyIsIkRvYyB2ZXJzaW9uIjoiMy4xMS4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
 
 ## Requirements
 
@@ -12,9 +12,8 @@ This code example demonstrates the use of a SPI (HAL) resource in master mode. T
 - Board Support Package (BSP) minimum required version for:
    - PSoC&trade; 6 MCU: v4.2.0
    - KIT_XMC72_EVK: v1.0.0
-   - CYW920829M2EVK-02: v1.0.1
-   - CYW989829M2EVB-01: v1.0.4
-   - CYW989829M2EVB-03: v1.0.4
+   - CYW920829M2EVK-02: v3.0.0
+   - CYW989829M2EVB-01: v3.0.0
 - Programming language: C
 - Associated parts: All [PSoC&trade; 6 MCU](https://www.infineon.com/PSoC6) parts, [XMC7000 MCU](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/), and [AIROC&trade; CYW20829 Bluetooth&reg; LE SoC](https://www.infineon.com/cms/en/product/promopages/airoc20829/)
 
@@ -29,7 +28,7 @@ This code example demonstrates the use of a SPI (HAL) resource in master mode. T
 - [PSoC&trade; 62S2 Wi-Fi Bluetooth&reg; Prototyping Kit](https://www.infineon.com/CY8CPROTO-062S2-43439) (`CY8CPROTO-062S2-43439`) – Default value of `TARGET`
 - [PSoC&trade; 6 Wi-Fi Bluetooth&reg; Prototyping Kit](https://www.infineon.com/CY8CPROTO-062-4343W) (`CY8CPROTO-062-4343W`)
 - [AIROC&trade; CYW20829 Bluetooth&reg; LE Evaluation Kit](https://www.infineon.com/CYW920829M2EVK-02) (`CYW920829M2EVK-02`)
-- AIROC&trade; CYW89829 Bluetooth&reg; LE evaluation kit(`CYW89829M2EVB-01`,`CYW89829M2EVB-03`)
+- AIROC&trade; CYW89829 Bluetooth&reg; LE evaluation kit(`CYW89829M2EVB-01`)
 - [PSoC&trade; 6 Wi-Fi Bluetooth&reg; Pioneer Kit](https://www.infineon.com/CY8CKIT-062-WIFI-BT) (`CY8CKIT-062-WIFI-BT`)
 - [PSoC&trade; 6 Bluetooth&reg; LE Pioneer Kit](https://www.infineon.com/CY8CKIT-062-BLE) (`CY8CKIT-062-BLE`)
 - [PSoC&trade; 6 Bluetooth&reg; LE Prototyping Kit](https://www.infineon.com/CY8CPROTO-063-BLE) (`CY8CPROTO-063-BLE`)
@@ -328,7 +327,7 @@ Document title: *CE225577* - *HAL: SPI master*
  3.8.0   | Added support for CY8CKIT-062S2-AI 
  3.9.0   | Added support for CYW989829M2EVB-03
  3.10.0  | Added support for CY8CEVAL-062S2-CYW955513SDM2WLIPA
- 
+ 3.11.0  | Remove support for CYW989829M2EVB-03 and removal of template for CYW920829M2EVK-02,KIT_XMC72_EVK
 <br>
 
 All referenced product or service names and trademarks are the property of their respective owners.
